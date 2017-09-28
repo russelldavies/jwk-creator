@@ -1,6 +1,6 @@
 module Main exposing (main)
 
-import Html exposing (Html, div, text, textarea, h1, h2, option, select, fieldset, form, legend, input, label, span, a, pre, p)
+import Html exposing (Html, div, text, textarea, h1, h2, option, select, fieldset, form, legend, input, label, span, a, pre, p, code)
 import Html.Attributes exposing (class, value, type_, id, for, placeholder, style, href)
 import Html.Events exposing (onClick, onInput)
 import Ports
@@ -119,11 +119,16 @@ view model =
             , p []
                 [ text "Create a "
                 , a [ href "https://tools.ietf.org/html/rfc7517" ] [ text "JSON Web Key (JWK)" ]
-                , text " from a public key or certificate."
+                , text " from an RSA private or public key."
                 ]
             , p []
-                [ text "This tool is for existing keys/certs. If you want to generate a new key and the corresponding JWK then use "
+                [ text "This tool is for existing keys. If you want to generate a new key and the corresponding JWK then use "
                 , a [ href "https://mkjwk.org/" ] [ text "mkjwk" ]
+                ]
+            , p []
+                [ text "This works on RSA keys only and expects them to be encoded in PEM format. "
+                , text "If you have a certificate, you'll need to extract the public key: "
+                , code [] [ text "openssl x509 -in certificate.pem -pubkey -noout" ]
                 ]
             ]
         , div [ class "pure-u-1-2" ]
@@ -157,7 +162,7 @@ view model =
                             []
                         ]
                     , div [ class "pure-control-group" ]
-                        [ label [ for "pem" ] [ text "PEM encoded key/cert" ]
+                        [ label [ for "pem" ] [ text "PEM encoded key" ]
                         , textarea
                             [ class "pure-input-1-2"
                             , id "pem"
