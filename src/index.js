@@ -11,6 +11,10 @@ var app = Elm.Main.fullscreen();
 
 app.ports.convertToJwk.subscribe(function(args) {
   let [ key, extras ] = args
-  let jwk = pem2jwk(key, extras)
-  app.ports.receiveJwk.send(beautify(JSON.stringify(jwk), { indent_size: 2 }))
+  try {
+    let jwk = pem2jwk(key, extras)
+    app.ports.receiveJwk.send(beautify(JSON.stringify(jwk), { indent_size: 2 }))
+  } catch (e) {
+    app.ports.receiveJwk.send('Invalid input')
+  }
 });
