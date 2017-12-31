@@ -1,4 +1,4 @@
-# JWT Creator
+# JWK Creator
 
 Simple webapp that converts an existing RSA private or public key into a [JSON Web
 Key (JWK)](https://tools.ietf.org/html/rfc7517).
